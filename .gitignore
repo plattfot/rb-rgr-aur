@@ -1,0 +1,5 @@
+# Ignoring the things that gets created by makepkg
+pkg
+src
+# Ignoring the RGS tarballs
+RGS_Linux_64_Receiver_*.tar.gz
