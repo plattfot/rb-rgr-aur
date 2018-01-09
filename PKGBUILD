@@ -1,6 +1,6 @@
 # Maintainer: Fredrik Salomonsson <plattfot@gmail.com>
 pkgname=rgr
-pkgver=7.2.1.7921
+pkgver=7.4.0.13800
 pkgrel=1
 epoch=
 pkgdesc="HP Remote Graphics Software, receiver only"
@@ -19,26 +19,25 @@ backup=()
 options=()
 install=
 changelog=
-source=("RGS_Linux_64_Receiver_v7.2.1_Z7550-01848.tar.gz")
+source=("RGS_Linux_64_Receiver_v7.4_L01911-001.tar.gz")
 noextract=()
 md5sums=('SKIP') #generate with 'makepkg -g'
 
 prepare() {
-    local rgr_root="${srcdir}/lin64/receiver"
-    mkdir -p ${rgr_root}/src
-    bsdtar -C ${rgr_root}/src -xf ${rgr_root}/rgreceiver_linux_64-${pkgver}-1.${arch}.rpm
-    chmod 755 -R $rgr_root/src
+    mkdir -p ${srcdir}/pkg
+    bsdtar -C ${srcdir}/pkg -xf ${srcdir}/ubuntu/receiver/rgreceiver_linux_64-${pkgver}-1.${arch}.rpm
+    chmod 755 -R ${srcdir}/pkg
 }
 
 package() {
     # install src
-    cp -r $srcdir/lin64/receiver/src/* $pkgdir/
+    cp -r $srcdir/pkg/* $pkgdir/
     chmod 755 -R $pkgdir/*
     install -dm755 $pkgdir/usr/bin
     # install executable in /usr/bin
     echo -e "#!/bin/bash\n/opt/hpremote/rgreceiver/rgreceiver.sh" > $pkgdir/usr/bin/rgr
     chmod 755 $pkgdir/usr/bin/rgr
     # install license
-    install -Dm644 $srcdir/lin64/receiver/LICENSE.txt \
+    install -Dm644 $srcdir/ubuntu/receiver/LICENSE.txt \
             $pkgdir/usr/share/licenses/$pkgname/license.txt
 }
