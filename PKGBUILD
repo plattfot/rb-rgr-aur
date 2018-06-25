@@ -1,9 +1,9 @@
 # Maintainer: Fredrik Salomonsson <plattfot@gmail.com>
 # Based on hgsreceiver-bin.git AUR
-_wacomEnabled=yes
+_wacomEnabled=no
 pkgname=rgr
 pkgver=7.5.0
-pkgrel=1
+pkgrel=2
 epoch=
 pkgdesc="HP Remote Graphics Software, receiver only"
 arch=('x86_64')
