@@ -2,7 +2,7 @@
 # Based on hgsreceiver-bin.git AUR
 _wacomEnabled=no
 pkgname=rgr
-pkgver=7.5.0
+pkgver=7.5.1
 pkgrel=2
 epoch=
 pkgdesc="HP Remote Graphics Software, receiver only"
@@ -21,9 +21,9 @@ backup=()
 options=()
 install=
 changelog=
-source=("RGS_Linux_64_Receiver_v7.5_L25793-001.tar.gz")
+source=("RGS_Linux_64_Receiver_v7.5.1_L25793-002.tar.gz")
 noextract=()
-md5sums=('0d72ec806fe89e0aa4974f825c91dd17')
+md5sums=('0f65eb2ff93d1c995cfd1b8dbde09941')
 
 prepare() {
     bsdtar xf rhel6/receiver/*.rpm
