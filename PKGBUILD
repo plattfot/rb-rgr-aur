@@ -2,15 +2,15 @@
 # Based on hgsreceiver-bin.git AUR
 _wacomEnabled=no
 pkgname=rgr
-pkgver=7.5.1
-pkgrel=2
+pkgver=7.6.1
+pkgrel=1
 epoch=
 pkgdesc="HP Remote Graphics Software, receiver only"
 arch=('x86_64')
 url="http://www8.hp.com/us/en/campaigns/workstations/remote-graphics-software.html"
 license=('custom')
 groups=()
-depends=('lib32-glu' 'dmidecode')
+depends=('lib32-glu' 'libudev0-shim')
 makedepends=()
 checkdepends=()
 optdepends=()
@@ -21,9 +21,9 @@ backup=()
 options=()
 install=
 changelog=
-source=("RGS_Linux_64_Receiver_v7.5.1_L25793-002.tar.gz")
+source=("RGS_Linux_64_Receiver_v7.6.1_L64929-001.tar.gz")
 noextract=()
-md5sums=('0f65eb2ff93d1c995cfd1b8dbde09941')
+md5sums=('6b7669e72b01fa0ace61bccf377a57bb')
 
 prepare() {
     bsdtar xf rhel6/receiver/*.rpm
@@ -34,15 +34,6 @@ package() {
 
     # install licence
     install -m644 -D rhel6/receiver/LICENSE.txt "${pkgdir}/usr/share/licenses/${pkgname}/LICENSE"
-
-    # hack needed to register advance features 
-    # N.B. rgsmbiosreader does not work under KVM/QEMU/OVMF bios, nor kernel greater than 4.4.44
-    # next 4 lines replace rgsmbioreader
-    mkdir opt/hpremote/registration
-    sudo dmidecode -t 1 | grep UUID | tr A-z a-z | tr -d - | cut -c8-80 > opt/hpremote/registration/H264
-    mv opt/hpremote/rgreceiver/rgsmbiosreader opt/hpremote/rgreceiver/rgsmbiosreader.old
-    echo '#!/bin/sh' > opt/hpremote/rgreceiver/rgsmbiosreader
-    echo 'cat /opt/hpremote/registration/H264' >> opt/hpremote/rgreceiver/rgsmbiosreader
 
     chmod 6755 opt/hpremote/rgreceiver/rgsmbiosreader
     chmod 755 etc/opt
