@@ -10,7 +10,7 @@ arch=('x86_64')
 url="http://www8.hp.com/us/en/campaigns/workstations/remote-graphics-software.html"
 license=('custom')
 groups=()
-depends=('lib32-glu' 'dmidecode')
+depends=('lib32-glu' 'libudev0-shim')
 makedepends=()
 checkdepends=()
 optdepends=()
@@ -35,15 +35,6 @@ package() {
     # install licence
     install -m644 -D rhel7-sled12/receiver/LICENSE.txt "${pkgdir}/usr/share/licenses/${pkgname}/LICENSE"
 
-    # hack needed to register advance features
-    # N.B. rgsmbiosreader does not work under KVM/QEMU/OVMF bios, nor kernel greater than 4.4.44
-    # next 4 lines replace rgsmbioreader
-    mkdir opt/hpremote/registration
-    sudo dmidecode -t 1 | grep UUID | tr A-z a-z | tr -d - | cut -c8-80 > opt/hpremote/registration/H264
-    mv opt/hpremote/rgreceiver/rgsmbiosreader opt/hpremote/rgreceiver/rgsmbiosreader.old
-    echo '#!/bin/sh' > opt/hpremote/rgreceiver/rgsmbiosreader
-    echo 'cat /opt/hpremote/registration/H264' >> opt/hpremote/rgreceiver/rgsmbiosreader
-
     chmod 6755 opt/hpremote/rgreceiver/rgsmbiosreader
     chmod 755 etc/opt
     chmod 755 etc/opt/hpremote
@@ -66,9 +57,4 @@ package() {
     install -dm755 $pkgdir/usr/bin
     echo -e "#!/bin/bash\n/opt/hpremote/rgreceiver/rgreceiver.sh" > $pkgdir/usr/bin/rgr
     chmod 755 $pkgdir/usr/bin/rgr
-}
-
-post-install() {
-
-    /sbin/ldconfig
 }
