@@ -1,51 +1,43 @@
 # Maintainer: Fredrik Salomonsson <plattfot@gmail.com>
 # Based on hgsreceiver-bin.git AUR
 _wacomEnabled=no
-pkgname=rgr
-pkgver=7.7.0
-pkgrel=1
+pkgname=rb-rgr
+pkgver=20.0.0.23427
+pkgrel=2
 epoch=
-pkgdesc="HP Remote Graphics Software, receiver only"
+pkgdesc="HP ZCentral Remote Boost Software (Receiver Only)"
 arch=('x86_64')
-url="http://www8.hp.com/us/en/campaigns/workstations/remote-graphics-software.html"
+url="https://www8.hp.com/us/en/workstations/zcentral-remote-boost.html"
 license=('custom')
 groups=()
-depends=('lib32-glu' 'libudev0-shim')
+depends=()
 makedepends=()
 checkdepends=()
 optdepends=()
 provides=()
-conflicts=()
+conflicts=('rgr')
 replaces=()
 backup=()
 options=()
 install=
 changelog=
-source=("RGS_Linux_64_Receiver_v7.7_L64936-001.tar.gz")
+source=("ZCentral_RB_2020.0_Linux_Receiver_M08155-001.tar.gz")
 noextract=()
-md5sums=('93f9c74e698199e094ec9b87519ca7f3')
+md5sums=('db8fe90fe324c6f5c7e6f8454c2d37c1')
 
 prepare() {
-    bsdtar xf rhel7-sled12/receiver/*.rpm
+    bsdtar xf rhel7-8/receiver/*.rpm
 }
 
 package() {
     cd "${srcdir}"
 
     # install licence
-    install -m644 -D rhel7-sled12/receiver/LICENSE.txt "${pkgdir}/usr/share/licenses/${pkgname}/LICENSE"
+    install -m644 -D rhel7-8/receiver/LICENSE.txt "${pkgdir}/usr/share/licenses/${pkgname}/LICENSE"
 
-    chmod 6755 opt/hpremote/rgreceiver/rgsmbiosreader
     chmod 755 etc/opt
     chmod 755 etc/opt/hpremote
     chmod 755 etc/opt/hpremote/*
-
-    # Install WaCom tablet rules
-    if [[ $_wacomEnabled != "no" ]]
-    then
-        install -d -m755 etc/udev/rules.d
-        cp -uf opt/hpremote/rgreceiver/rules/rgs-pen-tablet.rules etc/udev/rules.d/
-    fi
 
     # copy the directories
     cp -rpf ./opt/ $pkgdir

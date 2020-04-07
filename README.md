@@ -1,3 +1,6 @@
-AUR package descriptions for HP's RGS receiver (RGR)
+AUR package descriptions for HP's Zcentral Remote Boost Receiver (RGR)
 
-Download tar ball from hp.com/go/rgs
+Which seems to be a replacement for HP's RGS receiver.
+
+Download tarball from
+https://www8.hp.com/us/en/workstations/zcentral-remote-boost.html
